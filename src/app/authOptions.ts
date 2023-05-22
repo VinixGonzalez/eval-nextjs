@@ -81,5 +81,6 @@ export const authOptions: NextAuthOptions = {
     // signOut: "/logout",
     // newUser: '' // place to redirect the user at the first login
   },
+  secret: process.env.NEXTAUTH_SECRET,
   // debug: true,
 };

@@ -1,4 +1,3 @@
-import { useAtomValue } from "jotai";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -7,34 +6,11 @@ const enum ErrorStatusEnum {
   Erro = "Erro",
 }
 
-type ResponseErrorType = {
-  status: ErrorStatusEnum.Ok | ErrorStatusEnum.Erro;
-  result: null;
-  alerts: [
-    {
-      typeError: {
-        description: string;
-        statusCode: number;
-      };
-      message: string;
-    }
-  ];
-  errors: null;
-};
-
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       credentials: {},
       async authorize(credentials, req) {
-        // debugger;
-
-        // try {
-
-        // } catch (error) {
-        //   console.log(error);
-        // }
-
         const dataBody = JSON.stringify(credentials);
 
         const res = await fetch(

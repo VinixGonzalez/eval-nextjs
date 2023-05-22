@@ -73,7 +73,7 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
     async redirect({ url, baseUrl }) {
-      return baseUrl;
+      return url;
     },
   },
   pages: {

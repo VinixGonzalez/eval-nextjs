@@ -1,5 +1,3 @@
-"use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -38,8 +36,8 @@ export const useLoginFormHelper = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const handleLogin = (form: any) => {
-    signIn("credentials", { ...form });
+  const handleLogin = async (form: any) => {
+    await signIn("credentials", { ...form });
   };
 
   return {

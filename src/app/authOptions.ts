@@ -4,6 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 const enum ErrorStatusEnum {
   Ok = "Ok",
   Erro = "Erro",
+  BadRequest = 400,
 }
 
 export const authOptions: NextAuthOptions = {
@@ -36,7 +37,10 @@ export const authOptions: NextAuthOptions = {
           return userObj;
         }
 
-        if (res?.status === "Erro" || res?.status === 400) {
+        if (
+          res?.status === ErrorStatusEnum.Erro ||
+          res?.status === ErrorStatusEnum.BadRequest
+        ) {
           return res;
         }
 
@@ -65,8 +69,10 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async signIn({ user, account, profile, email, credentials }) {
-      debugger;
-      if (user?.status === "Erro" || user?.status === 400) {
+      if (
+        user?.status === ErrorStatusEnum.Erro ||
+        user?.status === ErrorStatusEnum.BadRequest
+      ) {
         return "/login/?error=wrong-credentials";
       }
 

@@ -5,9 +5,9 @@ import Link from "next/link";
 import { Plus } from "@/components/icons/ready-to-use";
 import { Header } from "@/components";
 
-export default function Home() {
-  // const session = await getServerSession(authOptions);
-  // if (!session) return redirect("/login");
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+  if (!session) return redirect("/login");
   return (
     <>
       <main className="min-h-screen flex flex-col">

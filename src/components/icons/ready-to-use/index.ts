@@ -5,3 +5,4 @@ export * from "./Eye";
 export * from "./CheckGreen";
 export * from "./AlertRed";
 export * from "./Password";
+export * from "./Plus";

@@ -1,10 +1,21 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { signIn } from "next-auth/react";
+import { toast } from "react-hot-toast";
 
 export const useLoginFormHelper = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [hasErrorWithCredentials, setHasErrorWithCredentials] = useState(false);
+
+  useEffect(() => {
+    const searchParams = window.location.search;
+    const hasError = searchParams.includes("error=wrong-credentials");
+    if (hasError) {
+      setHasErrorWithCredentials(true);
+    }
+  }, []);
 
   const loginSchema = z.object({
     email: z
@@ -26,8 +37,14 @@ export const useLoginFormHelper = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const handleLogin = () => {
-    debugger;
+  const handleLogin = async (form: any) => {
+    await signIn("credentials", { ...form });
+
+    // toast.promise(, {
+    //   loading: "Aguarde...",
+    //   success: <span>Redirecionando</span>,
+    //   error: <strong>Usuário ou senha inválidos</strong>,
+    // });
   };
 
   return {
@@ -40,5 +57,6 @@ export const useLoginFormHelper = () => {
     showPassword,
     errors,
     dirtyFields,
+    hasErrorWithCredentials,
   };
 };

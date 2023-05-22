@@ -13,6 +13,6 @@ declare module "next-auth/jwt" {
 declare module "next-auth" {
   interface User {
     accessToken: string;
-    status?: string;
+    status?: string | number;
   }
 }

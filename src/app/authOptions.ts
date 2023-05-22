@@ -24,7 +24,7 @@ export const authOptions: NextAuthOptions = {
 
         console.log(res);
         // If no error and we have user data, return it
-        if (res && res.status === ErrorStatusEnum.Ok) {
+        if (res.result) {
           const userObj = {
             name: res.result.userToken.name,
             email: res.result.userToken.email,
@@ -36,7 +36,7 @@ export const authOptions: NextAuthOptions = {
           return userObj;
         }
 
-        if (res && res.status === ErrorStatusEnum.Erro) {
+        if (res?.status === "Erro" || res?.status === 400) {
           return res;
         }
 
@@ -65,14 +65,15 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async signIn({ user, account, profile, email, credentials }) {
-      if (user.status === ErrorStatusEnum.Erro) {
+      debugger;
+      if (user?.status === "Erro" || user?.status === 400) {
         return "/login/?error=wrong-credentials";
       }
 
       return true;
     },
     async redirect({ url, baseUrl }) {
-      return url;
+      return baseUrl;
     },
   },
   pages: {

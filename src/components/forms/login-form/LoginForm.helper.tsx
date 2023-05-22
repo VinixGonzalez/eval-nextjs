@@ -1,9 +1,10 @@
+"use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
-import { toast } from "react-hot-toast";
 
 export const useLoginFormHelper = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -37,14 +38,8 @@ export const useLoginFormHelper = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const handleLogin = async (form: any) => {
-    await signIn("credentials", { ...form });
-
-    // toast.promise(, {
-    //   loading: "Aguarde...",
-    //   success: <span>Redirecionando</span>,
-    //   error: <strong>Usuário ou senha inválidos</strong>,
-    // });
+  const handleLogin = (form: any) => {
+    signIn("credentials", { ...form });
   };
 
   return {

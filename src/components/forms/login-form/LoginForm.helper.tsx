@@ -4,6 +4,17 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
 
+const loginSchema = z.object({
+  email: z
+    .string()
+    .nonempty("O e-mail é obrigatório")
+    .email("Formato de e-mail inválido")
+    .toLowerCase(),
+  password: z.string().nonempty("A senha é obrigatória"),
+});
+
+type LoginFormData = z.infer<typeof loginSchema>;
+
 export const useLoginFormHelper = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [hasErrorWithCredentials, setHasErrorWithCredentials] = useState(false);
@@ -15,17 +26,6 @@ export const useLoginFormHelper = () => {
       setHasErrorWithCredentials(true);
     }
   }, []);
-
-  const loginSchema = z.object({
-    email: z
-      .string()
-      .nonempty("O e-mail é obrigatório")
-      .email("Formato de e-mail inválido")
-      .toLowerCase(),
-    password: z.string().nonempty("A senha é obrigatória"),
-  });
-
-  type LoginFormData = z.infer<typeof loginSchema>;
 
   const {
     register,

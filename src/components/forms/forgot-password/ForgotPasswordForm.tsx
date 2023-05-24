@@ -10,7 +10,7 @@ import {
   Input,
 } from "@chakra-ui/react";
 
-import { useForgotPasswordHelper } from "./ForgotPassword.helper";
+import { useForgotPasswordFormHelper } from "./ForgotPasswordForm.helper";
 import Link from "next/link";
 
 export const ForgotPasswordForm: React.FC = () => {
@@ -22,7 +22,7 @@ export const ForgotPasswordForm: React.FC = () => {
     dirtyFields,
     errors,
     isValid,
-  } = useForgotPasswordHelper();
+  } = useForgotPasswordFormHelper();
 
   const emailRegister = register("email");
   const { onBlur, ...emailProps } = emailRegister;

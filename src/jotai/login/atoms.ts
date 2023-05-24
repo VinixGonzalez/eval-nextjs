@@ -15,3 +15,5 @@ const initialValues: LoginErrorTypes = {
 // Create your atoms and derivatives
 const loginErrorsAtom = atom<LoginErrorTypes>(initialValues);
 // const uppercaseAtom = atom((get) => get(textAtom).toUpperCase());
+
+export const isNewPasswordScreenAtom = atom(false);

@@ -40,6 +40,7 @@ module.exports = {
       },
       maxWidth: {
         "card-login": "530px",
+        "card-reset-password-success": "450px",
       },
     },
   },

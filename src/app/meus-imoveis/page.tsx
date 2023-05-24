@@ -2,7 +2,7 @@ import { Header } from "@/components";
 import { Breadcrumb } from "@/components/breadcrumb";
 import React from "react";
 
-export default function MeusImoveis() {
+export default function MeusImoveisPage() {
   return (
     <main className="min-h-screen flex flex-col">
       <Header onlyLogo pageLinks="default" />

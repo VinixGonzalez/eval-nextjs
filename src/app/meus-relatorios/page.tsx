@@ -2,7 +2,7 @@ import { Header } from "@/components";
 import { Breadcrumb } from "@/components/breadcrumb";
 import React from "react";
 
-export default function MeusRelatorios() {
+export default function MeusRelatoriosPage() {
   return (
     <main className="min-h-screen flex flex-col">
       <Header onlyLogo pageLinks="meus-relatorios" />

@@ -80,7 +80,7 @@ export const useNewPasswordForgotFormHelper = ({
     const urlDev = "https://localhost:7034/v1/identity/reset-password";
     const urlProd =
       "https://iw-dev-eval-identity-webapp.azurewebsites.net/v1/identity/reset-password";
-    const res = await fetch(urlProd, {
+    const res = await fetch(urlDev, {
       method: "POST",
       body: dataBody,
       headers: { "Content-Type": "application/json" },

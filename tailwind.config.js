@@ -42,6 +42,9 @@ module.exports = {
         "card-login": "530px",
         "card-reset-password-success": "450px",
       },
+      minHeight: {
+        half: "50vh",
+      },
     },
   },
   plugins: [],

@@ -30,7 +30,7 @@ export const useForgotPasswordFormHelper = () => {
     const urlProd =
       "https://iw-dev-eval-identity-webapp.azurewebsites.net/v1/identity/forgot-password";
     const dataBody = JSON.stringify(form);
-    const res = await fetch(urlProd, {
+    const res = await fetch(urlDev, {
       method: "POST",
       body: dataBody,
       headers: { "Content-Type": "application/json" },

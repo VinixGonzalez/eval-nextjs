@@ -1,10 +1,23 @@
 import React from "react";
 import Link from "next/link";
-import { Alert, Eye, LogoEval, Plus } from "@/components/icons/ready-to-use";
+import {
+  Report,
+  Heart,
+  LogoEval,
+  Plus,
+  Profile,
+  XClose,
+  LogoEvalNoText,
+} from "@/components/icons/ready-to-use";
 
 interface HeaderProps {
   onlyLogo?: boolean;
-  pageLinks: "default" | "meus-relatorios" | "novo-imovel" | "perfil";
+  pageLinks:
+    | "default"
+    | "meus-relatorios"
+    | "novo-imovel"
+    | "perfil"
+    | "detalhe-estudo";
 }
 
 export const Header: React.FC<HeaderProps> = ({ onlyLogo, pageLinks }) => {
@@ -14,7 +27,7 @@ export const Header: React.FC<HeaderProps> = ({ onlyLogo, pageLinks }) => {
         <div className="flex items-center gap-11">
           <Link href="/">
             {onlyLogo ? (
-              <LogoEval width="127" height="42" /> // TODO: trocar pelo icone sem texto
+              <LogoEvalNoText /> // TODO: trocar pelo icone sem texto
             ) : (
               <LogoEval width="127" height="42" />
             )}
@@ -27,32 +40,64 @@ export const Header: React.FC<HeaderProps> = ({ onlyLogo, pageLinks }) => {
                 href="/meus-imoveis"
               >
                 <span>Os meus imóveis</span>
-                <Alert width="18" height="18" />
+                <Heart />
               </Link>
               <Link
                 className="flex items-center gap-3 hover:text-purple"
                 href="/meus-relatorios"
               >
                 <span>Os meus relatórios</span>
-                <Alert width="18" height="18" />
+                <Report />
               </Link>
             </>
           )}
-
           {pageLinks === "meus-relatorios" && <div></div>}
+          {pageLinks === "novo-imovel" && (
+            <span className="text-xl text-black">Novo imóvel</span>
+          )}
         </div>
 
         <div className="flex items-center gap-3">
-          <Link
-            className="group hover:bg-black flex items-center gap-3 py-3 px-4 bg-purple text-white rounded-3xl text-sm"
-            href="/novo-imovel"
-          >
-            <span className="group-hover:text-white">Novo imóvel</span>
-            <Plus className="group-hover:fill-slate-900" />
-          </Link>
-          <Link className="flex items-center gap-3" href="/perfil">
-            <Alert width="18" height="18" />
-          </Link>
+          {pageLinks === "default" && (
+            <>
+              <Link
+                className="group hover:bg-black flex items-center gap-3 py-3 px-4 bg-purple text-white rounded-3xl text-sm"
+                href="/novo-imovel"
+              >
+                <span className="group-hover:text-white">Novo imóvel</span>
+                <Plus className="group-hover:fill-slate-900" />
+              </Link>
+              <Link
+                className="flex items-center gap-3 bg-white p-2 rounded-full"
+                href="/perfil"
+              >
+                <Profile />
+              </Link>
+            </>
+          )}
+          {pageLinks === "novo-imovel" && (
+            <>
+              <Link
+                className="group hover:bg-black flex items-center gap-3 py-3 px-4 bg-purple text-white rounded-3xl text-sm"
+                href="/novo-imovel"
+              >
+                <span className="group-hover:text-white">Submeter</span>
+              </Link>
+              <Link
+                className="group flex items-center gap-3 py-3 px-4 bg-white text-purple rounded-3xl text-sm"
+                href="/novo-imovel"
+              >
+                <span className="group-hover:text-purple">Cancelar</span>
+                <XClose />
+              </Link>
+              <Link
+                className="flex items-center gap-3 bg-white p-2 rounded-full"
+                href="/perfil"
+              >
+                <Profile />
+              </Link>
+            </>
+          )}
         </div>
       </nav>
     </header>

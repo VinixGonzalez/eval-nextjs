@@ -8,22 +8,21 @@ import {
 import Link from "next/link";
 import React from "react";
 
+interface Crumb {
+  isLast: boolean;
+  path: string;
+  label: string;
+}
 interface BreadcrumbProps {
-  crumbList: [
-    {
-      isLast: boolean;
-      path: string;
-      label: string;
-    }
-  ];
+  crumbList: Array<Crumb>;
 }
 
 export const Breadcrumb: React.FC<BreadcrumbProps> = ({ crumbList }) => {
   return (
-    <ChakraBreadCrumb>
+    <ChakraBreadCrumb className="text-xs" separator=">">
       <BreadcrumbItem>
-        <BreadcrumbLink as={Link} href="/">
-          Home
+        <BreadcrumbLink className="no-underline" as={Link} href="/">
+          <span className="text-purple">Home</span>
         </BreadcrumbLink>
       </BreadcrumbItem>
       {crumbList?.map((crumb) => (
@@ -31,8 +30,12 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({ crumbList }) => {
           {crumb.isLast ? (
             <span>{crumb.label}</span>
           ) : (
-            <BreadcrumbLink as={Link} href={crumb.path}>
-              {crumb.label}
+            <BreadcrumbLink
+              className="no-underline"
+              as={Link}
+              href={crumb.path}
+            >
+              <span className="text-purple">{crumb.label}</span>
             </BreadcrumbLink>
           )}
         </BreadcrumbItem>

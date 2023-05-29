@@ -1,14 +1,17 @@
-import { Header } from "@/components";
-import { Breadcrumb } from "@/components/breadcrumb";
 import React from "react";
+import { Header, Breadcrumb } from "@/components";
 
 export default function MeusRelatoriosPage() {
   return (
     <main className="min-h-screen flex flex-col">
-      <Header onlyLogo pageLinks="meus-relatorios" />
+      <Header pageLinks="default" />
       <Breadcrumb
         crumbList={[
-          { label: "Meus Relatórios", path: "/meus-relatorios", isLast: true },
+          {
+            label: "Os meus Relatórios",
+            path: "/meus-relatorios",
+            isLast: true,
+          },
         ]}
       />
       <section>

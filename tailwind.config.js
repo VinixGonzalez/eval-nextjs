@@ -44,6 +44,7 @@ module.exports = {
       },
       minHeight: {
         half: "50vh",
+        headerHeight: "80px",
       },
     },
   },

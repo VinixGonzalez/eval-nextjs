@@ -1,5 +1,5 @@
-import { Header } from "@/components";
 import React from "react";
+import { Breadcrumb, Header } from "@/components";
 import { ProfileContent } from "./(ProfileContent)/ProfileContent";
 
 export default function PerfilPage() {

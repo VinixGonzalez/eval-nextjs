@@ -1,13 +1,19 @@
 "use client";
 
 import React from "react";
-import { Email, CheckGreen, AlertRed } from "@/components/icons/ready-to-use";
+import {
+  Email,
+  CheckGreen,
+  AlertRed,
+  Password,
+} from "@/components/icons/ready-to-use";
 import {
   Stack,
   InputGroup,
   InputLeftElement,
   InputRightElement,
   Input,
+  Button,
 } from "@chakra-ui/react";
 
 import { useForgotPasswordFormHelper } from "./ForgotPasswordForm.helper";
@@ -22,6 +28,7 @@ export const ForgotPasswordForm: React.FC = () => {
     dirtyFields,
     errors,
     isValid,
+    isLoading,
   } = useForgotPasswordFormHelper();
 
   const emailRegister = register("email");
@@ -73,9 +80,16 @@ export const ForgotPasswordForm: React.FC = () => {
           >
             Cancelar
           </Link>
-          <button className="py-3 px-5 bg-purple text-white rounded-4xl">
+          <Button
+            isLoading={isLoading}
+            loadingText="Aguarde"
+            spinnerPlacement="end"
+            className="py-3 px-5 bg-purple text-white text-xs font-semibold rounded-4xl hover:bg-black"
+            rightIcon={<Password height="12" width="12" />}
+            type="submit"
+          >
             Pedir password
-          </button>
+          </Button>
         </div>
       </form>
     </div>

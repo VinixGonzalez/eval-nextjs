@@ -6,8 +6,8 @@ import { redirect } from "next/navigation";
 import React from "react";
 
 export default async function LoginPage() {
-  const session = await getServerSession(authOptions);
-  if (session) redirect("/");
+  // const session = await getServerSession(authOptions);
+  // if (session) redirect("/");
 
   return (
     <div className="flex flex-col bg-white p-6 rounded-3xl sm:w-card-login sm:py-14 sm:px-20 ">

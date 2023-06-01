@@ -1,19 +1,22 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+const forgetPasswordSchema = z.object({
+  email: z
+    .string()
+    .nonempty("Insira um e-mail para recuperar a password.")
+    .email("Formato de e-mail inválido")
+    .toLowerCase(),
+});
+
+type ForgetPasswordFormData = z.infer<typeof forgetPasswordSchema>;
+
 export const useForgotPasswordFormHelper = () => {
   const router = useRouter();
-  const forgetPasswordSchema = z.object({
-    email: z
-      .string()
-      .nonempty("Insira um e-mail para recuperar a password.")
-      .email("Formato de e-mail inválido")
-      .toLowerCase(),
-  });
-
-  type ForgetPasswordFormData = z.infer<typeof forgetPasswordSchema>;
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -26,15 +29,20 @@ export const useForgotPasswordFormHelper = () => {
   });
 
   const handleRecoverPassword = async (form: any) => {
+    setIsLoading(true);
     const urlDev = "https://localhost:7034/v1/identity/forgot-password";
     const urlProd =
       "https://iw-dev-eval-identity-webapp.azurewebsites.net/v1/identity/forgot-password";
     const dataBody = JSON.stringify(form);
-    const res = await fetch(urlDev, {
+    const res = await fetch(urlProd, {
       method: "POST",
       body: dataBody,
       headers: { "Content-Type": "application/json" },
-    }).then((res) => res.json());
+    })
+      .then((res) => res.json())
+      .finally(() => {
+        setIsLoading(false);
+      });
 
     if (res.result && res.status === "Ok") {
       // TODO: Trocar para enum
@@ -55,5 +63,6 @@ export const useForgotPasswordFormHelper = () => {
     errors,
     dirtyFields,
     isValid,
+    isLoading,
   };
 };

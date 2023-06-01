@@ -23,11 +23,11 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ onlyLogo, pageLinks }) => {
   return (
     <header>
-      <nav className="flex py-4 px-36 bg-lightPurple items-center justify-between font-semibold">
+      <nav className="flex py-4 px-36 bg-lightPurple items-center justify-between font-semibold min-h-headerHeight">
         <div className="flex items-center gap-11">
           <Link href="/">
             {onlyLogo ? (
-              <LogoEvalNoText /> // TODO: trocar pelo icone sem texto
+              <LogoEvalNoText />
             ) : (
               <LogoEval width="127" height="42" />
             )}

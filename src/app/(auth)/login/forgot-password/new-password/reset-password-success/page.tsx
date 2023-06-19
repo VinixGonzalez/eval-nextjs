@@ -12,8 +12,8 @@ export default function ResetPasswordSuccessPage() {
           Alteração efectuada com sucesso
         </h1>
         <p className="text-xs block mb-11 text-center">
-          Por favor verifique a sua caixa de email. Caso não tenha recebido por
-          favor verifique a caixa de Spam.
+          Sua senha foi alterada com sucesso, agora você já pode efectuar o
+          login novamente.
         </p>
         <Link href="/" className="text-purple text-xs">
           Voltar para a homepage

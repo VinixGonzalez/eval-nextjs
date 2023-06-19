@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
+import { ErrorStatusCodesEnum } from "@/app/authOptions";
+import { toastComponent } from "@/components/toast/Toast";
 
 const loginSchema = z.object({
   email: z
@@ -21,9 +23,42 @@ export const useLoginFormHelper = () => {
 
   useEffect(() => {
     const searchParams = window.location.search;
-    const hasError = searchParams.includes("error=wrong-credentials");
+
+    const hasError =
+      searchParams.includes(ErrorStatusCodesEnum.WrongCredentials) ||
+      searchParams.includes(ErrorStatusCodesEnum.UserBlockedManyLoginTries) ||
+      searchParams.includes(ErrorStatusCodesEnum.UserNotFoundByEmail) ||
+      searchParams.includes(ErrorStatusCodesEnum.MinCharPassword);
     if (hasError) {
       setHasErrorWithCredentials(true);
+
+      if (searchParams.includes(ErrorStatusCodesEnum.WrongCredentials)) {
+        toastComponent({
+          msg: "Usuário ou senha estão incorretos.",
+          type: "error",
+          align: "horizontal",
+        });
+      }
+      if (
+        searchParams.includes(ErrorStatusCodesEnum.UserBlockedManyLoginTries)
+      ) {
+        toastComponent({
+          msg: "Usuário bloqueado temporariamente por tentativas inválidas.",
+          type: "error",
+        });
+      }
+      if (searchParams.includes(ErrorStatusCodesEnum.UserNotFoundByEmail)) {
+        toastComponent({
+          msg: "Não foi possível localizar o Usuário pelo E-mail informado.",
+          type: "error",
+        });
+      }
+      if (searchParams.includes(ErrorStatusCodesEnum.MinCharPassword)) {
+        toastComponent({
+          msg: "O valor mínimo permitido no campo Palavra-passe é de 8 caracteres.",
+          type: "error",
+        });
+      }
     }
   }, []);
 
@@ -36,8 +71,14 @@ export const useLoginFormHelper = () => {
     resolver: zodResolver(loginSchema),
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleLogin = async (form: any) => {
-    await signIn("credentials", { ...form });
+    setIsLoading(true);
+    await signIn("credentials", {
+      ...form,
+    });
+    setIsLoading(false);
   };
 
   return {
@@ -46,6 +87,7 @@ export const useLoginFormHelper = () => {
     handleSubmit,
     setShowPassword,
     trigger,
+    isLoading,
     isValid,
     showPassword,
     errors,

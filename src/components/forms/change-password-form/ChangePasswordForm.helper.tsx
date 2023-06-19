@@ -1,14 +1,15 @@
 import { toastComponent } from "@/components/toast/Toast";
 import { errorManager } from "@/utils/error";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const newPasswordForgotSchema = z
+const changePasswordSchema = z
   .object({
-    password: z
+    oldPassword: z.string().nonempty("Insira sua password atual."),
+    newPassword: z
       .string()
       .nonempty("A senha é obrigatória.")
       .min(8, "A senha deve ter no mínimo 8 caracteres.")
@@ -44,82 +45,90 @@ const newPasswordForgotSchema = z
           "A confirmação de senha deve ter pelo menos 1 caractere especial.",
       }),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.newPassword === data.confirmPassword, {
     message: "As senhas não conferem.",
     path: ["confirmPassword"],
   });
 
-type NewPasswordForgotData = z.infer<typeof newPasswordForgotSchema>;
+type ChangePasswordFormData = z.infer<typeof changePasswordSchema>;
 
-export const useNewPasswordForgotFormHelper = ({
-  token,
-  email,
+export const useChangePasswordFormHelper = ({
+  closeModal,
 }: {
-  token: string | string[] | undefined;
-  email: string | string[] | undefined;
+  closeModal: () => void;
 }) => {
-  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { data: session, status } = useSession();
 
   const {
     register,
+    setError,
     handleSubmit,
-    trigger,
     formState: { errors, dirtyFields, isValid },
-  } = useForm<NewPasswordForgotData>({
-    resolver: zodResolver(newPasswordForgotSchema),
+    trigger,
+  } = useForm<ChangePasswordFormData>({
+    resolver: zodResolver(changePasswordSchema),
   });
 
-  const handleChangePassword = async (form: NewPasswordForgotData) => {
-    setLoading(true);
-    const stringToken = token as string;
-    const formattedToken = stringToken.replaceAll(" ", "+");
-    const payload = { token: formattedToken, email, password: form.password };
+  const handleChangePassword = async (form: ChangePasswordFormData) => {
+    setIsLoading(true);
+
+    const payload = { email: session?.user?.email, ...form };
     const dataBody = JSON.stringify(payload);
-    const urls = {
-      dev: "https://localhost:7034/v1/identity/reset-password",
-      prod: "https://iw-dev-eval-identity-webapp.azurewebsites.net/v1/identity/user/reset-password",
-    };
-    const res = await fetch(urls.prod, {
-      method: "POST",
-      body: dataBody,
-      headers: { "Content-Type": "application/json" },
-    }).then((res) => res.json());
+
+    const res = await fetch(
+      "https://iw-dev-eval-identity-webapp.azurewebsites.net/v1/identity/user/change-password",
+      {
+        method: "POST",
+        body: dataBody,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: session?.accessToken as string,
+        },
+      }
+    ).then((res) => {
+      return res.json();
+    });
 
     if (res.result && res.status === 200) {
-      router.push("/login/forgot-password/new-password/reset-password-success");
+      toastComponent({
+        msg: "Password alterada com sucesso!",
+        type: "success",
+      });
+      closeModal();
     }
 
     if (res.status === 400) {
+      setError("oldPassword", {
+        message: "Verifique sua senha",
+      });
       const errorsMapped = errorManager(res.errors);
       errorsMapped.forEach((error) => {
         toastComponent({
-          msg: error.message,
+          msg: error.message || "Ocorreu um erro.",
           type: "error",
           duration: 25000,
         });
       });
-      // TODO: verificar validação
-      // setError("email", { type: "value", message: res.alerts[0]?.message });
     }
 
-    setLoading(false);
+    setIsLoading(false);
   };
 
   return {
-    showPassword,
-    showConfirmPassword,
-    errors,
-    dirtyFields,
-    isValid,
-    loading,
-    trigger,
     register,
     handleSubmit,
     setShowPassword,
     setShowConfirmPassword,
     handleChangePassword,
+    trigger,
+    isLoading,
+    errors,
+    dirtyFields,
+    isValid,
+    showPassword,
+    showConfirmPassword,
   };
 };

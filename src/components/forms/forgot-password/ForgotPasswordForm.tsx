@@ -55,7 +55,7 @@ export const ForgotPasswordForm: React.FC = () => {
                 dirtyFields.email && !errors.email
                   ? "border-green"
                   : "border-black"
-              } ${errors.email && "border-red-600"}`}
+              } ${errors.email && "border-red"}`}
             />
             {dirtyFields.email && !errors.email && (
               <InputRightElement>
@@ -69,7 +69,7 @@ export const ForgotPasswordForm: React.FC = () => {
             )}
           </InputGroup>
           {errors.email && (
-            <span className="text-red-600">{errors.email.message}</span>
+            <span className="text-red">{errors.email.message}</span>
           )}
         </Stack>
 

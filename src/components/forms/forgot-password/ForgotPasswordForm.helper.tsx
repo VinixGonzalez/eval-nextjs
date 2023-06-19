@@ -1,3 +1,4 @@
+import { toastComponent } from "@/components/toast/Toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -32,27 +33,22 @@ export const useForgotPasswordFormHelper = () => {
     setIsLoading(true);
     const urlDev = "https://localhost:7034/v1/identity/forgot-password";
     const urlProd =
-      "https://iw-dev-eval-identity-webapp.azurewebsites.net/v1/identity/forgot-password";
+      "https://iw-dev-eval-identity-webapp.azurewebsites.net/v1/identity/user/forgot-password";
     const dataBody = JSON.stringify(form);
-    const res = await fetch(urlProd, {
+    await fetch(urlProd, {
       method: "POST",
       body: dataBody,
       headers: { "Content-Type": "application/json" },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res !== undefined) return res.json();
+        return null;
+      })
       .finally(() => {
         setIsLoading(false);
       });
 
-    if (res.result && res.status === "Ok") {
-      // TODO: Trocar para enum
-      router.push("/login/forgot-password/password-email-success");
-    }
-
-    if (res.status === "Erro") {
-      // TODO: Trocar para enum
-      setError("email", { type: "value", message: res.alerts[0]?.message });
-    }
+    router.push("/login/forgot-password/password-email-success");
   };
 
   return {

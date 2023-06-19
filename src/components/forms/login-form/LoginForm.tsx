@@ -6,6 +6,7 @@ import {
   InputLeftElement,
   InputRightElement,
   Input,
+  Button,
 } from "@chakra-ui/react";
 import React from "react";
 import Link from "next/link";
@@ -14,6 +15,7 @@ import {
   CheckGreen,
   Email,
   Eye,
+  EyeClosed,
   Password,
 } from "@/components/icons/ready-to-use";
 import { useLoginFormHelper } from "./LoginForm.helper";
@@ -24,6 +26,7 @@ export const LoginForm: React.FC = () => {
     showPassword,
     dirtyFields,
     isValid,
+    isLoading,
     hasErrorWithCredentials,
     setShowPassword,
     handleLogin,
@@ -37,18 +40,18 @@ export const LoginForm: React.FC = () => {
 
   return (
     <>
-      {hasErrorWithCredentials && (
+      {/* {hasErrorWithCredentials && (
         <div className="flex items-center justify-center">
-          <span className="text-lg text-red-600 font-semibold">
+          <span className="text-lg text-red font-semibold">
             Email ou senha inválidos.
           </span>
         </div>
-      )}
+      )} */}
       <form onSubmit={handleSubmit(handleLogin)}>
         <div className="flex flex-col gap-6">
           <Stack>
             <label className="font-bold text-xs" htmlFor="email">
-              Email <strong className="text-red-600">*</strong>
+              Email <strong className="text-red">*</strong>
             </label>
             <InputGroup className="flex items-center">
               <InputLeftElement pointerEvents="none">
@@ -67,9 +70,7 @@ export const LoginForm: React.FC = () => {
                   dirtyFields.email && !errors.email
                     ? "border-green"
                     : "border-black"
-                } ${
-                  (errors.email || hasErrorWithCredentials) && "border-red-600"
-                }`}
+                } ${(errors.email || hasErrorWithCredentials) && "border-red"}`}
               />
               {dirtyFields.email && !errors.email && (
                 <InputRightElement>
@@ -83,12 +84,12 @@ export const LoginForm: React.FC = () => {
               )}
             </InputGroup>
             {errors.email && (
-              <span className="text-red-600">{errors.email.message}</span>
+              <span className="text-red">{errors.email.message}</span>
             )}
           </Stack>
           <Stack>
             <label className="font-bold text-xs" htmlFor="password">
-              Password <strong className="text-red-600">*</strong>
+              Password <strong className="text-red">*</strong>
             </label>
             <InputGroup className="flex items-center">
               <InputLeftElement pointerEvents="none">
@@ -103,8 +104,7 @@ export const LoginForm: React.FC = () => {
                     ? "border-green"
                     : "border-black"
                 } ${
-                  (errors.password || hasErrorWithCredentials) &&
-                  "border-red-600"
+                  (errors.password || hasErrorWithCredentials) && "border-red"
                 }`}
                 {...register("password")}
               />
@@ -119,11 +119,11 @@ export const LoginForm: React.FC = () => {
                 {(errors.password || hasErrorWithCredentials) && (
                   <AlertRed className="absolute right-11" />
                 )}
-                <Eye />
+                {showPassword ? <EyeClosed /> : <Eye />}
               </InputRightElement>
             </InputGroup>
             {errors.password && (
-              <span className="text-red-600">{errors.password.message}</span>
+              <span className="text-red">{errors.password.message}</span>
             )}
           </Stack>
 
@@ -136,9 +136,19 @@ export const LoginForm: React.FC = () => {
             </Link>
           </div>
 
-          <button className="mt-4 w-32 p-4 bg-purple text-white rounded-4xl self-center">
+          {/* <button className="mt-4 w-32 p-4 bg-purple text-white rounded-4xl self-center">
             Entrar
-          </button>
+          </button> */}
+          <Button
+            isLoading={isLoading}
+            loadingText="Aguarde"
+            spinnerPlacement="end"
+            className="bg-purple w-32 text-white text-xs font-semibold rounded-4xl self-center hover:bg-black"
+            rightIcon={<Password height="12" width="12" />}
+            type="submit"
+          >
+            Entrar
+          </Button>
         </div>
       </form>
     </>

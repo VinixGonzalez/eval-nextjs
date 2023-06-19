@@ -1,7 +1,12 @@
 import React from "react";
 import { Header, Breadcrumb } from "@/components";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "../authOptions";
 
-export default function NovoImovelPage() {
+export default async function NovoImovelPage() {
+  const session = await getServerSession(authOptions);
+  if (!session) return redirect("/login");
   return (
     <main className="min-h-full">
       <Header pageLinks="novo-imovel" />

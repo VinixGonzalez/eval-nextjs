@@ -31,6 +31,8 @@ module.exports = {
         lightYellow: "#FEF2CD",
         violet: "#A274FF",
         lightViolet: "#DCCBFF",
+        lightRed: "#FDEFED",
+        red: "#be1e2d",
       },
       borderRadius: {
         "4xl": "38px",
@@ -45,6 +47,9 @@ module.exports = {
       minHeight: {
         half: "50vh",
         headerHeight: "80px",
+      },
+      fontSize: {
+        notFoundPage: "18.75rem",
       },
     },
   },

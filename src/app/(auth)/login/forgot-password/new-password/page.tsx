@@ -14,9 +14,12 @@ export default async function NewPasswordPage({
     redirect("/");
   }
 
+  const token = searchParams.token as string;
+  const formattedToken = token.replaceAll(" ", "+");
+
   const dataBody = JSON.stringify({
     email: searchParams.email,
-    token: searchParams.token,
+    token: formattedToken,
   });
 
   const res = await fetch(
@@ -28,15 +31,7 @@ export default async function NewPasswordPage({
     }
   ).then((res) => res.json());
 
-  // TODO: Verificar a questão do CORS com o denner e trocar por !res.ok para fazer o redirect
-  if (!res.ok) {
-    // setTimeout(() => {
-    //   toastComponent({
-    //     msg: "O Token fornecido já expirou, por favor refaça o processo de recuperação de senha.",
-    //     type: "error",
-    //     duration: 7000,
-    //   });
-    // }, 8000);
+  if (res.status !== 200) {
     redirect("/login/forgot-password/new-password/invalid-token");
   }
 

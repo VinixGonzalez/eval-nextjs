@@ -1,6 +1,6 @@
 "use client";
-import React from "react";
 
+import React from "react";
 import {
   Password,
   CheckGreen,
@@ -14,7 +14,6 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { useNewPasswordForgotFormHelper } from "./NewPasswordForgotForm.helper";
-import { Skeleton } from "@/components";
 
 export default function NewPasswordForgotForm({
   token,

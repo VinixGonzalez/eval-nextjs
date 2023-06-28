@@ -69,7 +69,7 @@ export const Header: React.FC<HeaderProps> = ({ onlyLogo, pageLinks }) => {
               </Link>
               <Link
                 className="flex items-center gap-3 bg-white p-2 rounded-full"
-                href="/perfil"
+                href="/profile"
               >
                 <Profile />
               </Link>
@@ -92,7 +92,7 @@ export const Header: React.FC<HeaderProps> = ({ onlyLogo, pageLinks }) => {
               </Link>
               <Link
                 className="flex items-center gap-3 bg-white p-2 rounded-full"
-                href="/perfil"
+                href="/profile"
               >
                 <Profile />
               </Link>

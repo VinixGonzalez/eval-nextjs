@@ -116,7 +116,8 @@ export const authOptions: NextAuthOptions = {
       }
 
       if (user?.status === 400) {
-        return `/login?error=${ErrorStatusCodesEnum.WrongCredentials}`;
+        const errors = errorManager(user.errors);
+        return `/login?error=${errors[0].code}`;
       }
 
       return true;

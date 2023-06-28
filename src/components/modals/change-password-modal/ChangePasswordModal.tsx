@@ -1,3 +1,5 @@
+"use client";
+
 import { ChangePasswordForm } from "@/components/forms";
 import { Password } from "@/components/icons/ready-to-use";
 import {

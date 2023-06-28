@@ -15,3 +15,7 @@ export * from "./XClose";
 export * from "./XCloseBg";
 export * from "./Info";
 export * from "./House404";
+export * from "./DeleteTrash";
+export * from "./ImageThumb";
+export * from "./Print";
+export * from "./Share";

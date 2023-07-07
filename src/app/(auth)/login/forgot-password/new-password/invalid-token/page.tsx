@@ -1,4 +1,4 @@
-import { AlertRed, LogoEval } from "@/components/icons/ready-to-use";
+import { AlertRed, LogoEval } from "@/app/components/icons/ready-to-use";
 import Link from "next/link";
 
 export default function InvalidTokenPage() {

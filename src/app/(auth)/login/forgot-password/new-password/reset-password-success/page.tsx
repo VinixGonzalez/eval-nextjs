@@ -1,4 +1,4 @@
-import { CheckGreen, LogoEval } from "@/components/icons/ready-to-use";
+import { CheckGreen, LogoEval } from "@/app/components/icons/ready-to-use";
 import Link from "next/link";
 import React from "react";
 

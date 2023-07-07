@@ -5,5 +5,5 @@ export type Imovel = {
   valor: number;
   data: string;
   img_url: string;
-  actions: Element;
+  actions: string;
 };

@@ -1,6 +1,6 @@
 import React from "react";
-import NewPasswordForgotForm from "@/components/forms/new-password-forgot-form/NewPasswordForgotForm";
-import { LogoEval } from "@/components/icons/ready-to-use";
+import NewPasswordForgotForm from "@/app/components/forms/new-password-forgot-form/NewPasswordForgotForm";
+import { LogoEval } from "@/app/components/icons/ready-to-use";
 import { redirect } from "next/navigation";
 
 export default async function NewPasswordPage({

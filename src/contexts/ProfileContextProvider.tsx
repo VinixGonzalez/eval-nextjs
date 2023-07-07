@@ -1,6 +1,6 @@
 "use client";
 
-import { ProfileData } from "@/app/profile/page";
+import { ProfileData } from "@/app/(private)/profile/page";
 import { createContext, useState } from "react";
 
 export const ProfileContext = createContext({});

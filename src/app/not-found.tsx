@@ -1,6 +1,6 @@
 "use client";
 
-import { House404, LogoEval } from "@/components/icons/ready-to-use";
+import { House404, LogoEval } from "@/app/components/icons/ready-to-use";
 import React from "react";
 import { useRouter } from "next/navigation";
 

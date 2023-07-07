@@ -45,33 +45,18 @@ export const authOptions: NextAuthOptions = {
               expiresIn: res.result.expiresIn,
             };
             return userObj;
-          } else {
-            // if (res.statusCode === "400") {
-            //   throw new Error(res.alerts[0].message.messageDescription, {
-            //     cause: { code: res.alerts[0].code },
-            //   });
-            // }
-
-            if (
-              res?.statusCode === ErrorStatusEnum.Erro ||
-              res?.statusCode === ErrorStatusEnum.BadRequest ||
-              res?.status === 400
-            ) {
-              return res;
-            }
-
-            return null;
           }
         } catch (error: any) {
           const {
             cause: { code },
           } = error;
           console.log(error);
-          throw new Error(code);
+          return null;
+          // throw new Error(code);
         }
 
         // Return null if user data could not be retrieved
-        // return null;
+        return null;
       },
     }),
   ],
@@ -95,30 +80,30 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async signIn({ user, account, profile, email, credentials }) {
-      if (
-        (user?.statusCode === ErrorStatusEnum.Erro ||
-          user?.statusCode === ErrorStatusEnum.BadRequest) &&
-        user.alerts
-      ) {
-        if (
-          user.alerts[0].code === ErrorStatusCodesEnum.UserBlockedManyLoginTries
-        ) {
-          return `/login?error=${ErrorStatusCodesEnum.UserBlockedManyLoginTries}`;
-        }
+      // if (
+      //   (user?.statusCode === ErrorStatusEnum.Erro ||
+      //     user?.statusCode === ErrorStatusEnum.BadRequest) &&
+      //   user.alerts
+      // ) {
+      //   if (
+      //     user.alerts[0].code === ErrorStatusCodesEnum.UserBlockedManyLoginTries
+      //   ) {
+      //     return `/login?error=${ErrorStatusCodesEnum.UserBlockedManyLoginTries}`;
+      //   }
 
-        if (user.alerts[0].code === ErrorStatusCodesEnum.UserNotFoundByEmail) {
-          return `/login?error=${ErrorStatusCodesEnum.UserNotFoundByEmail}`;
-        }
+      //   if (user.alerts[0].code === ErrorStatusCodesEnum.UserNotFoundByEmail) {
+      //     return `/login?error=${ErrorStatusCodesEnum.UserNotFoundByEmail}`;
+      //   }
 
-        if (user.alerts[0].code === ErrorStatusCodesEnum.WrongCredentials) {
-          return `/login?error=${ErrorStatusCodesEnum.WrongCredentials}`;
-        }
-      }
+      //   if (user.alerts[0].code === ErrorStatusCodesEnum.WrongCredentials) {
+      //     return `/login?error=${ErrorStatusCodesEnum.WrongCredentials}`;
+      //   }
+      // }
 
-      if (user?.status === 400) {
-        const errors = errorManager(user.errors);
-        return `/login?error=${errors[0].code}`;
-      }
+      // if (user?.status === 400) {
+      //   const errors = errorManager(user.errors);
+      //   return `/login?error=${errors[0].code}`;
+      // }
 
       return true;
     },
@@ -127,8 +112,8 @@ export const authOptions: NextAuthOptions = {
     },
   },
   pages: {
-    error: "/login",
-    signIn: "/",
+    // error: "/login",
+    signIn: "/login",
     // signOut: "/logout",
     // newUser: '' // place to redirect the user at the first login
   },

@@ -1,6 +1,6 @@
 import { authOptions } from "@/app/authOptions";
-import { LoginForm } from "@/app/components/forms";
-import { LogoEval } from "@/app/components/icons/ready-to-use";
+import { LoginForm } from "@/components/forms";
+import { LogoEval } from "@/components/icons/ready-to-use";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React from "react";

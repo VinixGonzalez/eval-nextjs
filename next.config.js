@@ -8,17 +8,10 @@ const nextConfig = {
     });
     return config;
   },
-  experimental: {},
-  output: "standalone",
-  images: {
-    domains: [
-      "st5.depositphotos.com",
-      "st.depositphotos.com",
-      "st2.depositphotos.com",
-      "st4.depositphotos.com",
-      "static3.depositphotos.com",
-    ],
+  experimental: {
+    swcPlugins: [["@swc-jotai/react-refresh", {}]],
   },
+  output: "standalone",
 };
 
 module.exports = nextConfig;

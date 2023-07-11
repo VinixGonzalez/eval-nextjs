@@ -1,17 +1,19 @@
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import { authOptions } from "./authOptions";
 import Link from "next/link";
-import { Plus } from "@/app/components/icons/ready-to-use";
-import { Header } from "@/app/components";
+import { Plus } from "@/components/icons/ready-to-use";
+import { Header } from "@/components";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
+  if (!session) return redirect("/login");
   return (
     <>
       <main className="min-h-screen flex flex-col">
         <Header pageLinks="default" />
         <section className="text-center flex flex-col flex-1 items-center justify-center gap-8">
-          <h1 className="text-5xl text-purple">Olá, {session?.user?.name}</h1>
+          <h1 className="text-5xl text-purple">Olá, {session.user?.name}</h1>
           <div className="text-2xl text-black">
             <p>Ainda não adicionou nenhum imóvel.</p>
             <p>Clique abaixo para iniciar um estudo de mercado.</p>

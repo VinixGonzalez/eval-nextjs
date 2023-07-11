@@ -1,4 +1,4 @@
-import { CheckGreen } from "@/app/components/icons/ready-to-use";
+import { CheckGreen } from "@/components/icons/ready-to-use";
 import Link from "next/link";
 import React from "react";
 
@@ -17,7 +17,7 @@ export default function PasswordEmailSuccessPage() {
           Caso não tenha recebido por favor verifique a caixa de Spam.
         </p>
       </div>
-      <Link href="/" className="text-purple mt-6 text-xs font-semibold">
+      <Link href="/login" className="text-purple mt-6 text-xs font-semibold">
         Voltar para a homepage
       </Link>
     </div>

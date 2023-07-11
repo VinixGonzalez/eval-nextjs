@@ -21,6 +21,7 @@ module.exports = {
         white: "#FFF",
         purple: "#591EE5",
         lightPurple: "#F1E8FB",
+        lightnessPurple: "#F1E8FB50",
         darkBlue: "#032DA9",
         lightBlue: "#ADC0FF",
         darkGreen: "#004801",
@@ -47,6 +48,9 @@ module.exports = {
       minHeight: {
         half: "50vh",
         headerHeight: "80px",
+      },
+      fontSize: {
+        notFoundPage: "18.75rem",
       },
     },
   },

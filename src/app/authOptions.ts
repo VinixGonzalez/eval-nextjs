@@ -1,6 +1,7 @@
 import { errorManager } from "@/utils/error";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { createCookie } from "./actions";
 
 const enum ErrorStatusEnum {
   Ok = "Ok",
@@ -44,6 +45,12 @@ export const authOptions: NextAuthOptions = {
               accessToken: res.result.accessToken,
               expiresIn: res.result.expiresIn,
             };
+
+            // createCookie({
+            //   value: res.result.expiresIn.toString(),
+            //   key: "eval::access-expiration",
+            // });
+
             return userObj;
           }
         } catch (error: any) {

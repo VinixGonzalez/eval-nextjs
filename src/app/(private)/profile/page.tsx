@@ -2,12 +2,8 @@ import React from "react";
 import { Header } from "@/app/components";
 // import { ProfileContent } from "./(ProfileContent)/ProfileContent";
 import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 import { authOptions } from "../../authOptions";
-import { SkeletonProfileView } from "@/app/components/skeletons";
 import ProfileContent from "./(ProfileContent)/ProfileContent";
-import { toastComponent } from "@/app/components/toast/Toast";
-import { ToastContainer, toast } from "react-toastify";
 
 export interface ProfileData {
   email: string;
@@ -42,8 +38,8 @@ const getProfileData = async (accessToken: string) => {
     switch (error.cause?.status) {
       case 400:
         break; // bad
-      case 401:
-        break; // auth
+      case 401: // auth
+        break;
       case 403:
         break; // forbd
       case 404:
@@ -65,7 +61,6 @@ export default async function PerfilPage() {
     <main className="min-h-full">
       <Header pageLinks="default" />
       <ProfileContent profileData={profileData} />
-      <ToastContainer />
     </main>
   );
 }

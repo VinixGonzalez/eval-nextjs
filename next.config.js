@@ -8,7 +8,9 @@ const nextConfig = {
     });
     return config;
   },
-  experimental: {},
+  experimental: {
+    serverActions: true,
+  },
   output: "standalone",
   images: {
     domains: [

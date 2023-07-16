@@ -20,3 +20,5 @@ export * from "./ImageThumb";
 export * from "./Print";
 export * from "./Share";
 export * from "./Search";
+export * from "./Edit";
+export * from "./Update";

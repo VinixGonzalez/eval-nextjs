@@ -45,6 +45,7 @@ import {
 } from "@chakra-ui/react";
 import { Imovel } from "@/types/MeusImoveisTableTypes";
 import { euro } from "@/utils/currency";
+import { useRouter } from "next/navigation";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -261,6 +262,8 @@ export function MeusImoveisTable({ listaImoveis }: { listaImoveis: Imovel[] }) {
     []
   );
 
+  const router = useRouter();
+
   const table = useReactTable({
     data,
     columns,
@@ -291,6 +294,10 @@ export function MeusImoveisTable({ listaImoveis }: { listaImoveis: Imovel[] }) {
     debugHeaders: true,
     debugColumns: false,
   });
+
+  const handleSelectImovel = (rowId: string) => {
+    router.push(`/meus-imoveis/${rowId}`);
+  };
 
   return (
     <div className="p-2 mt-6">
@@ -343,13 +350,21 @@ export function MeusImoveisTable({ listaImoveis }: { listaImoveis: Imovel[] }) {
           {table.getRowModel().rows.map((row, index) => (
             <tr
               key={row.id}
-              className={`border-t-2 border-gray-100 hover:bg-fuchsia-50 ${
+              className={`border-t-2 border-gray-100 hover:bg-fuchsia-50 cursor-pointer ${
                 index % 2 === 0 ? "bg-white" : "bg-lightnessPurple"
               }`}
+              onClick={
+                () =>
+                  handleSelectImovel(row.getAllCells()[1].getValue() as string) // obtem o id na segunda coluna
+              }
             >
               {row.getVisibleCells().map((cell) => {
                 return (
-                  <td key={cell.id} className="p-4">
+                  <td
+                    key={cell.id}
+                    className="p-4"
+                    // onClick={() => handleSelectImovel(row.getAllCells()[0].)}
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 );

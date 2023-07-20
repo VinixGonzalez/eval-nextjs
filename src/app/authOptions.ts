@@ -1,21 +1,5 @@
-import { errorManager } from "@/utils/error";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { createCookie } from "./actions";
-
-const enum ErrorStatusEnum {
-  Ok = "Ok",
-  Erro = "Erro",
-  BadRequest = "400",
-}
-
-export const enum ErrorStatusCodesEnum {
-  InvalidEmail = "ME00000006",
-  WrongCredentials = "ME00000008",
-  UserBlockedManyLoginTries = "ME00000009",
-  MinCharPassword = "ME00000011",
-  UserNotFoundByEmail = "ME00000012",
-}
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -46,11 +30,6 @@ export const authOptions: NextAuthOptions = {
               expiresIn: res.result.expiresIn,
             };
 
-            // createCookie({
-            //   value: res.result.expiresIn.toString(),
-            //   key: "eval::access-expiration",
-            // });
-
             return userObj;
           }
         } catch (error: any) {
@@ -59,7 +38,6 @@ export const authOptions: NextAuthOptions = {
           } = error;
           console.log(error);
           return null;
-          // throw new Error(code);
         }
 
         // Return null if user data could not be retrieved
@@ -88,31 +66,6 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async signIn({ user, account, profile, email, credentials }) {
-      // if (
-      //   (user?.statusCode === ErrorStatusEnum.Erro ||
-      //     user?.statusCode === ErrorStatusEnum.BadRequest) &&
-      //   user.alerts
-      // ) {
-      //   if (
-      //     user.alerts[0].code === ErrorStatusCodesEnum.UserBlockedManyLoginTries
-      //   ) {
-      //     return `/login?error=${ErrorStatusCodesEnum.UserBlockedManyLoginTries}`;
-      //   }
-
-      //   if (user.alerts[0].code === ErrorStatusCodesEnum.UserNotFoundByEmail) {
-      //     return `/login?error=${ErrorStatusCodesEnum.UserNotFoundByEmail}`;
-      //   }
-
-      //   if (user.alerts[0].code === ErrorStatusCodesEnum.WrongCredentials) {
-      //     return `/login?error=${ErrorStatusCodesEnum.WrongCredentials}`;
-      //   }
-      // }
-
-      // if (user?.status === 400) {
-      //   const errors = errorManager(user.errors);
-      //   return `/login?error=${errors[0].code}`;
-      // }
-
       return true;
     },
     async redirect({ url, baseUrl }) {

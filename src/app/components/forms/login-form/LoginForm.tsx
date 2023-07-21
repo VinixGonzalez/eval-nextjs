@@ -8,7 +8,6 @@ import {
   Input,
   Button,
 } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
 import React from "react";
 import Link from "next/link";
 import {
@@ -22,8 +21,6 @@ import {
 import { useLoginFormHelper } from "./LoginForm.helper";
 
 export const LoginForm: React.FC = () => {
-  const router = useRouter();
-
   const {
     errors,
     showPassword,
@@ -35,7 +32,7 @@ export const LoginForm: React.FC = () => {
     handleSubmit,
     register,
     trigger,
-  } = useLoginFormHelper(router);
+  } = useLoginFormHelper();
 
   const emailRegister = register("email");
   const { onBlur, ...emailProps } = emailRegister;

@@ -7,6 +7,7 @@ import { z } from "zod";
 import { signIn } from "next-auth/react";
 import { toastComponent } from "@/app/components/toast/Toast";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
+import { useRouter } from "next/navigation";
 
 const loginSchema = z.object({
   email: z
@@ -19,7 +20,8 @@ const loginSchema = z.object({
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
-export const useLoginFormHelper = (router: AppRouterInstance) => {
+export const useLoginFormHelper = () => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [hasErrorWithCredentials, setHasErrorWithCredentials] = useState(false);
 
@@ -36,17 +38,18 @@ export const useLoginFormHelper = (router: AppRouterInstance) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (form: LoginFormData) => {
+    debugger;
     setIsLoading(true);
     const signInResponse = await signIn("credentials", {
       ...form,
       redirect: false,
-      callbackUrl: `${window.location.origin}/`,
     });
     setIsLoading(false);
 
     if (signInResponse && signInResponse.error) {
       // validate
 
+      console.log("erro");
       toastComponent({
         msg: "Usuário ou senha inválidos.",
         type: "error",
@@ -61,6 +64,8 @@ export const useLoginFormHelper = (router: AppRouterInstance) => {
       });
       return;
     }
+
+    router.replace("/");
   };
 
   return {

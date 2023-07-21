@@ -10,7 +10,8 @@ export async function middleware(request: NextRequest) {
   console.log("Checando middleware 🔑");
 
   const { pathname } = request.nextUrl;
-  if (pathname.startsWith("/_next")) return NextResponse.next();
+  if (pathname.startsWith("/_next") || pathname === "/favicon.ico")
+    return NextResponse.next();
 
   const tokenEncapsulated: any = await getToken({
     req: request,
@@ -23,7 +24,11 @@ export async function middleware(request: NextRequest) {
   const tokenExpiration = new Date(tokenFromJwt?.exp * 1000);
 
   console.log(
-    `TOKENS 🔑: encapsulated: ${tokenEncapsulated}; fromJwt: ${tokenFromJwt}; expiration: ${tokenExpiration}`
+    `TOKENS 🔑: encapsulated: ${JSON.stringify(
+      tokenEncapsulated
+    )}; fromJwt: ${JSON.stringify(
+      tokenFromJwt
+    )}; expiration: ${tokenExpiration}`
   );
 
   // no token || expired

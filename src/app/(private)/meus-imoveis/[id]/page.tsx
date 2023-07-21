@@ -5,8 +5,16 @@ import React from "react";
 import { ToastContainer } from "react-toastify";
 import imgDefault from "@/app/components/icons/svgs/ImageThumb.svg";
 import { TodasImagensButton } from "./components/TodasImagensButton";
+import Link from "next/link";
 
-const MOCK_DATA = {
+export interface FotografiaProps {
+  id: string;
+  name: string;
+  url_path: string;
+  isMain: boolean;
+}
+
+export const MOCK_DATA_DETALHE_IMOVEL = {
   last_update: "22-02-2023",
   morada: "Avenida dos Ferroviários, Pinhal Novo, Portugal",
   tipo: "Apartamento T1",
@@ -16,30 +24,35 @@ const MOCK_DATA = {
   valor_imovel: "340000",
   fotografias: [
     {
+      id: "1",
       name: "foto 01",
       url_path:
         "https://st.depositphotos.com/1041088/1389/i/450/depositphotos_13894667-stock-photo-beige-large-luxury-house-with.jpg",
       isMain: true,
     },
     {
+      id: "2",
       name: "foto 02",
       url_path:
         "https://st2.depositphotos.com/1041088/6081/i/450/depositphotos_60816659-stock-photo-american-house-exterior-with-curb.jpg",
       isMain: false,
     },
     {
+      id: "3",
       name: "foto 03",
       url_path:
         "https://st.depositphotos.com/1041088/4723/i/450/depositphotos_47238727-stock-photo-luxury-house-exterior-front-porch.jpg",
       isMain: false,
     },
     {
+      id: "4",
       name: "foto 04",
       url_path:
         "https://st4.depositphotos.com/12071432/20989/i/450/depositphotos_209894484-stock-photo-view-modern-house-green-lawn.jpg",
       isMain: false,
     },
     {
+      id: "5",
       name: "foto 05",
       url_path:
         "https://st4.depositphotos.com/12071432/20989/i/450/depositphotos_209894284-stock-photo-view-new-modern-house-swimming.jpg",
@@ -82,9 +95,11 @@ export default function DetalheEstudoPage({
   };
 
   let mainImage =
-    MOCK_DATA.fotografias.find((foto) => foto.isMain) ||
-    MOCK_DATA.fotografias[0];
-  let otherImages = MOCK_DATA.fotografias.filter((foto) => foto !== mainImage);
+    MOCK_DATA_DETALHE_IMOVEL.fotografias.find((foto) => foto.isMain) ||
+    MOCK_DATA_DETALHE_IMOVEL.fotografias[0];
+  let otherImages = MOCK_DATA_DETALHE_IMOVEL.fotografias.filter(
+    (foto) => foto !== mainImage
+  );
 
   return (
     <main className="min-h-full">
@@ -95,7 +110,7 @@ export default function DetalheEstudoPage({
         <section id="info-imovel" className="text-black">
           <div className="mb-9">
             <span className="text-xs">
-              Última atualização: {MOCK_DATA.last_update}
+              Última atualização: {MOCK_DATA_DETALHE_IMOVEL.last_update}
             </span>
           </div>
           <div className="flex items-center justify-between">
@@ -121,25 +136,29 @@ export default function DetalheEstudoPage({
 
           <div className="flex gap-3 w-full">
             <div className="w-2/4 relative">
-              <Image
-                alt={mainImage.name}
-                src={mainImage.url_path}
-                width={812}
-                height={450}
-                className="max-h-[450px] rounded-lg"
-              />
+              <Link href={`/photos/${mainImage.id}`}>
+                <Image
+                  alt={mainImage.name}
+                  src={mainImage.url_path}
+                  width={812}
+                  height={450}
+                  className="max-h-[450px] rounded-lg"
+                />
+              </Link>
               <TodasImagensButton />
             </div>
             <div className="w-2/4 flex flex-wrap gap-3 overflow-hidden">
               {otherImages.map((foto, index) => (
-                <Image
-                  key={foto.name}
-                  width={393}
-                  height={218}
-                  alt={foto.name}
-                  src={foto.url_path}
-                  className="max-h-[218px] rounded-lg"
-                />
+                <Link key={foto.name} href={`/photos/${foto.id}`}>
+                  <Image
+                    key={foto.name}
+                    width={393}
+                    height={218}
+                    alt={foto.name}
+                    src={foto.url_path}
+                    className="max-h-[218px] rounded-lg"
+                  />
+                </Link>
               ))}
             </div>
 

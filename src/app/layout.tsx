@@ -12,14 +12,19 @@ export const metadata = {
 
 export default async function RootLayout({
   children,
+  modal,
 }: {
   children: React.ReactNode;
+  modal: React.ReactNode;
 }) {
   return (
     <html lang="en">
       <body className={`${mulish.className}`}>
         <Toaster />
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          {modal}
+        </Providers>
       </body>
     </html>
   );

@@ -7,7 +7,6 @@ import { NextRequest } from "next/server";
 import jwtoken from "jsonwebtoken";
 
 export async function middleware(request: NextRequest) {
-  const response = NextResponse.next();
   debugger;
   const tokenEncapsulated: any = await getToken({
     req: request,
@@ -29,10 +28,12 @@ export async function middleware(request: NextRequest) {
     new Date() > new Date(tokenExpiration)
   ) {
     request.cookies.clear();
-    return NextResponse.redirect(new URL("/login", request.url));
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    return NextResponse.rewrite(url);
   }
 
-  return response;
+  return NextResponse.next();
 }
 
 export const config = {
@@ -42,5 +43,10 @@ export const config = {
     "/meus-relatorios/:path*",
     "/novo-imovel/:path*",
     "/profile/:path*",
+  ],
+  runtime: "nodejs",
+  unstable_allowDynamic: [
+    "/node_modules/lodash/**",
+    "/node_modules/jsonwebtoken/**",
   ],
 };

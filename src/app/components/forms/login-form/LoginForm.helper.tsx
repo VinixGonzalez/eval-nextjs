@@ -6,8 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
 import { toastComponent } from "@/app/components/toast/Toast";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
-import { useRouter } from "next/navigation";
+import navigation from "next/navigation";
 
 const loginSchema = z.object({
   email: z
@@ -21,7 +20,6 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 export const useLoginFormHelper = () => {
-  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [hasErrorWithCredentials, setHasErrorWithCredentials] = useState(false);
 
@@ -43,6 +41,9 @@ export const useLoginFormHelper = () => {
     const signInResponse = await signIn("credentials", {
       ...form,
       redirect: false,
+      callbackUrl: `${
+        new URLSearchParams(window.location.search).get("callbackUrl") ?? "/"
+      }`,
     });
     setIsLoading(false);
 
@@ -65,7 +66,7 @@ export const useLoginFormHelper = () => {
       return;
     }
 
-    router.replace("/");
+    navigation.redirect("/");
   };
 
   return {

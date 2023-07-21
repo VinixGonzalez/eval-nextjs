@@ -1,6 +1,6 @@
-import { LoginForm } from "@/app/components/forms";
-import { LogoEval } from "@/app/components/icons/ready-to-use";
 import React from "react";
+import { LogoEval } from "@/app/components/icons/ready-to-use";
+import { LoginForm } from "@/app/components/forms";
 
 export default async function LoginPage() {
   return (

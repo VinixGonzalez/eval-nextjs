@@ -40,6 +40,7 @@ export const useLoginFormHelper = (router: AppRouterInstance) => {
     const signInResponse = await signIn("credentials", {
       ...form,
       redirect: false,
+      callbackUrl: `${window.location.origin}/`,
     });
     setIsLoading(false);
 
@@ -60,8 +61,6 @@ export const useLoginFormHelper = (router: AppRouterInstance) => {
       });
       return;
     }
-
-    router.push("/");
   };
 
   return {

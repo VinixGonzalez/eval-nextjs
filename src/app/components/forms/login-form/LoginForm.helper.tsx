@@ -67,6 +67,7 @@ export const useLoginFormHelper = () => {
       return;
     }
 
+    console.log("Redirecionado para a HOME");
     router.push("/");
   };
 

@@ -27,8 +27,6 @@ export async function middleware(request: NextRequest) {
 
   // no token || expired
   if (
-    !tokenEncapsulated ||
-    !tokenFromJwt ||
     !request.cookies.has("next-auth.session-token") ||
     new Date() > new Date(tokenExpiration)
   ) {

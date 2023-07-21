@@ -37,7 +37,6 @@ export const useLoginFormHelper = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (form: LoginFormData) => {
-    debugger;
     setIsLoading(true);
     const signInResponse = await signIn("credentials", {
       ...form,

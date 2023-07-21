@@ -7,6 +7,8 @@ import { NextRequest } from "next/server";
 import jwtoken from "jsonwebtoken";
 
 export async function middleware(request: NextRequest) {
+  console.log("Checando middleware 🔑");
+
   const { pathname } = request.nextUrl;
   if (pathname.startsWith("/_next")) return NextResponse.next();
 
@@ -20,7 +22,6 @@ export async function middleware(request: NextRequest) {
   );
   const tokenExpiration = new Date(tokenFromJwt?.exp * 1000);
 
-  console.log("Checando middleware 🔑");
   console.log(
     `TOKENS 🔑: encapsulated: ${tokenEncapsulated}; fromJwt: ${tokenFromJwt}; expiration: ${tokenExpiration}`
   );

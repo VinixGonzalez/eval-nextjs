@@ -10,8 +10,6 @@ export async function middleware(request: NextRequest) {
   console.log("Checando middleware 🔑");
 
   const { pathname } = request.nextUrl;
-  if (pathname.startsWith("/_next") || pathname === "/favicon.ico")
-    return NextResponse.next();
 
   const tokenEncapsulated: any = await getToken({
     req: request,
@@ -31,17 +29,21 @@ export async function middleware(request: NextRequest) {
     )}; expiration: ${tokenExpiration}`
   );
 
+  const hasToken =
+    request.cookies.has("next-auth.session-token") ||
+    request.cookies.has("__Secure-next-auth.session-token");
+
   // no token || expired
-  if (
-    !request.cookies.has("next-auth.session-token") ||
-    new Date() > new Date(tokenExpiration)
-  ) {
+  if (!hasToken || new Date() > new Date(tokenExpiration)) {
     console.log("Sem Token! Limpando cookies e redirecionando para login ⚠");
     request.cookies.clear();
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
   }
+
+  if (pathname.startsWith("/_next") || pathname === "/favicon.ico")
+    return NextResponse.next();
 
   return NextResponse.next();
 }

@@ -11,6 +11,7 @@ export const dollar = new Intl.NumberFormat("en-US", {
 export const euro = new Intl.NumberFormat("pt-PT", {
   style: "currency",
   currency: "EUR",
+  maximumFractionDigits: 0,
 });
 
 export const libra = new Intl.NumberFormat("en-GB", {

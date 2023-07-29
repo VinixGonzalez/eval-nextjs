@@ -1,7 +1,6 @@
 export { default } from "next-auth/middleware";
 import { getToken } from "next-auth/jwt";
 
-// middleware.js
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import jwtoken from "jsonwebtoken";
@@ -42,6 +41,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  // TODO: Remover e testar, validação redundante neste ponto
   if (pathname.startsWith("/_next") || pathname === "/favicon.ico")
     return NextResponse.next();
 

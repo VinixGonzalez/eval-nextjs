@@ -9,7 +9,7 @@ export default function Frame({ photo }: { photo: FotografiaProps }) {
         src={photo.url_path}
         height={600}
         width={600}
-        className="w-full object-cover aspect-square col-span-2"
+        // className="w-full object-cover aspect-square col-span-2"
       />
 
       <div className="bg-white p-4 px-6">

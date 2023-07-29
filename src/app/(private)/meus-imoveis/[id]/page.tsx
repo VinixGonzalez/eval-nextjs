@@ -3,9 +3,9 @@ import { Header } from "@/app/components";
 import Image from "next/image";
 import React from "react";
 import { ToastContainer } from "react-toastify";
-import imgDefault from "@/app/components/icons/svgs/ImageThumb.svg";
-import { TodasImagensButton } from "./components/TodasImagensButton";
-import Link from "next/link";
+import { TodasImagensAlbum } from "./components/TodasImagensAlbum";
+import { CardAvaliacao } from "@/app/components/card-avaliacao";
+import { euro } from "@/utils/currency";
 
 export interface FotografiaProps {
   id: string;
@@ -132,55 +132,79 @@ export default function DetalheEstudoPage({
           </div>
         </section>
         <section id="fotografias" className="w-full">
-          <span>Fotografias</span>
+          <span className="font-semibold text-xl">Fotografias</span>
 
-          <div className="flex gap-3 w-full">
+          <div className="flex gap-3 w-full mt-3">
             <div className="w-2/4 relative">
-              <Link href={`/photos/${mainImage.id}`}>
-                <Image
-                  alt={mainImage.name}
-                  src={mainImage.url_path}
-                  width={812}
-                  height={450}
-                  className="max-h-[450px] rounded-lg"
-                />
-              </Link>
-              <TodasImagensButton />
+              <Image
+                alt={mainImage.name}
+                src={mainImage.url_path}
+                width={812}
+                height={450}
+                className="rounded-lg"
+              />
+
+              <TodasImagensAlbum />
             </div>
             <div className="w-2/4 flex flex-wrap gap-3 overflow-hidden">
               {otherImages.map((foto, index) => (
-                <Link key={foto.name} href={`/photos/${foto.id}`}>
-                  <Image
-                    key={foto.name}
-                    width={393}
-                    height={218}
-                    alt={foto.name}
-                    src={foto.url_path}
-                    className="max-h-[218px] rounded-lg"
-                  />
-                </Link>
+                <Image
+                  key={foto.name}
+                  width={393}
+                  height={218}
+                  alt={foto.name}
+                  src={foto.url_path}
+                  className=" rounded-lg"
+                />
               ))}
             </div>
-
-            {/* <div className="w-2/4">
-
-            </div>
-            <div className="flex flex-1 flex-wrap gap-3">
-              {otherImages.map((foto, index) => (
-                <div key={index} className="flex flex-wrap w-2/5">
-                  <Image
-                    width={326}
-                    height={400}
-                    alt={foto.name}
-                    src={foto.url_path}
-                  />
-                </div>
-              ))}
-            </div> */}
           </div>
         </section>
         <section id="localizacao"></section>
-        <section id="valores-estimados"></section>
+        <section id="valores-estimados" className="flex flex-col gap-3">
+          <span className="font-semibold text-xl">Valores estimados</span>
+
+          <div className="items-center flex-wrap justify-between gap-4 flex">
+            <CardAvaliacao.Root type="pessimista">
+              <CardAvaliacao.Icon type="pessimista" />
+              <CardAvaliacao.Content>
+                <CardAvaliacao.Text>Valor pessimista</CardAvaliacao.Text>
+                <CardAvaliacao.Value type="pessimista">
+                  {euro.format(296000)}
+                </CardAvaliacao.Value>
+                <CardAvaliacao.SquareMeters>
+                  {euro.format(2960)}/m²
+                </CardAvaliacao.SquareMeters>
+              </CardAvaliacao.Content>
+            </CardAvaliacao.Root>
+
+            <CardAvaliacao.Root type="justo">
+              <CardAvaliacao.Icon type="justo" />
+              <CardAvaliacao.Content>
+                <CardAvaliacao.Text>Valor justo de mercado</CardAvaliacao.Text>
+                <CardAvaliacao.Value type="justo">
+                  {euro.format(340000)}
+                </CardAvaliacao.Value>
+                <CardAvaliacao.SquareMeters>
+                  {euro.format(3400)}/m²
+                </CardAvaliacao.SquareMeters>
+              </CardAvaliacao.Content>
+            </CardAvaliacao.Root>
+
+            <CardAvaliacao.Root type="desajustado">
+              <CardAvaliacao.Icon type="desajustado" />
+              <CardAvaliacao.Content>
+                <CardAvaliacao.Text>Valor desajustado</CardAvaliacao.Text>
+                <CardAvaliacao.Value type="desajustado">
+                  {euro.format(372000)}
+                </CardAvaliacao.Value>
+                <CardAvaliacao.SquareMeters>
+                  {euro.format(3720)}/m²
+                </CardAvaliacao.SquareMeters>
+              </CardAvaliacao.Content>
+            </CardAvaliacao.Root>
+          </div>
+        </section>
         <section id="detalhes-imovel"></section>
         <section id="caracteristicas-imovel"></section>
         <section id="evolucao-temporal"></section>

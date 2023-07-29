@@ -15,7 +15,7 @@ import {
   Share,
   XCloseBg,
 } from "@/app/components/icons/ready-to-use";
-import { Historico } from "../icons/ready-to-use/Historico";
+import { HistoricoMenu } from "./HistoricoMenu";
 
 interface HeaderProps {
   onlyLogo?: boolean;
@@ -64,7 +64,7 @@ export const Header: React.FC<HeaderProps> = ({ onlyLogo, pageLinks }) => {
               <div className="flex gap-5">
                 <Link
                   className="group hover:bg-black flex items-center gap-3 py-3 px-4 bg-white text-purple rounded-3xl text-xs"
-                  href="/novo-imovel"
+                  href="#"
                 >
                   <span className="group-hover:text-white">
                     Criar relatório
@@ -77,7 +77,7 @@ export const Header: React.FC<HeaderProps> = ({ onlyLogo, pageLinks }) => {
                 </Link>
                 <Link
                   className="group hover:bg-black flex items-center gap-3 py-3 px-4 bg-white text-purple rounded-3xl text-xs"
-                  href="/novo-imovel"
+                  href="#"
                 >
                   <Report
                     className="group-hover:fill-slate-900"
@@ -96,7 +96,7 @@ export const Header: React.FC<HeaderProps> = ({ onlyLogo, pageLinks }) => {
                 </Link>
                 <Link
                   className="group hover:bg-black flex items-center gap-3 py-3 px-4 bg-white text-purple rounded-3xl text-xs"
-                  href="/novo-imovel"
+                  href="#"
                 >
                   <span className="group-hover:text-white">
                     Editar relatório
@@ -105,7 +105,7 @@ export const Header: React.FC<HeaderProps> = ({ onlyLogo, pageLinks }) => {
                 </Link>
                 <Link
                   className="group hover:bg-black flex items-center gap-3 py-3 px-4 bg-white text-purple rounded-3xl text-xs"
-                  href="/novo-imovel"
+                  href="#"
                 >
                   <span className="group-hover:text-white">
                     Atualizar estudo
@@ -116,22 +116,7 @@ export const Header: React.FC<HeaderProps> = ({ onlyLogo, pageLinks }) => {
                     width="12"
                   />
                 </Link>
-                <Link
-                  className="group hover:bg-black flex items-center gap-3 py-3 px-4 bg-white text-purple rounded-3xl text-xs"
-                  href="/novo-imovel"
-                >
-                  <Historico
-                    className="group-hover:fill-slate-900"
-                    height="20"
-                    width="20"
-                  />
-                  <span className="group-hover:text-white">Histórico</span>
-                  <Plus // TODO: Pedir icone de dropdown menu
-                    className="group-hover:fill-slate-900"
-                    height="20"
-                    width="20"
-                  />
-                </Link>
+                <HistoricoMenu />
               </div>
             </div>
           )}

@@ -10,6 +10,20 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
+  const hasToken =
+    request.cookies.has("next-auth.session-token") ||
+    request.cookies.has("__Secure-next-auth.session-token");
+
+  if (pathname === "/login" && hasToken) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/";
+    return NextResponse.redirect(url);
+  }
+
+  if (pathname === "/login" && !hasToken) {
+    return NextResponse.next();
+  }
+
   const tokenEncapsulated: any = await getToken({
     req: request,
     secret: process.env.SECRET,
@@ -27,10 +41,6 @@ export async function middleware(request: NextRequest) {
       tokenFromJwt
     )}; expiration: ${tokenExpiration}`
   );
-
-  const hasToken =
-    request.cookies.has("next-auth.session-token") ||
-    request.cookies.has("__Secure-next-auth.session-token");
 
   // no token || expired
   if (!hasToken || new Date() > new Date(tokenExpiration)) {
@@ -51,6 +61,7 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     "/",
+    "/login",
     "/meus-imoveis/:path*",
     "/meus-relatorios/:path*",
     "/novo-imovel/:path*",
